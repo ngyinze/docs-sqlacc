@@ -3,6 +3,7 @@ sidebar_position: 1
 title: Table of contents
 hide_title: true
 slug: /quick-start/purchase/purchase-cancelled-note
+formName: TfmPHPC
 ---
 
 import {TOC} from '@src/components/toc.js';

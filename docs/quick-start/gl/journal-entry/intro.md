@@ -3,6 +3,7 @@ sidebar_position: 1
 title: Table of contents
 hide_title: true
 slug: /quick-start/gl/journal-entry 
+formName: TfmGLJE
 ---
 
 import {TOC} from '@src/components/toc.js';
