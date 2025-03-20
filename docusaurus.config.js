@@ -35,6 +35,7 @@ const config = {
   },
   plugins: [
     "plugin-image-zoom",
+    path.resolve(__dirname, 'plugins/generate-help-json'),
     function aliasPlugin(context, options) {
       return {
         name: 'alias-plugin',
