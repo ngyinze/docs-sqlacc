@@ -6,7 +6,7 @@ slug: /quick-start/gl/journal-entry
 formName: TfmGLJE
 ---
 
-import {TOC} from '@src/components/toc.js';
+import {TOC} from '@src-sqlacc/components/toc.js';
 
 <TOC
 dataEntryList = {[

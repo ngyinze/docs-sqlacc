@@ -1,5 +1,5 @@
 import React from "react";
-import "@src/css/toc-card.css"
+import "@src-sqlacc/css/toc-card.css"
 
 // styling
 const containerStyle = {

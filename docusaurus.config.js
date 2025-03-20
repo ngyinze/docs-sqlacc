@@ -43,7 +43,7 @@ const config = {
           return {
             resolve: {
               alias: {
-                "@src": path.resolve(__dirname, "src"),
+                "@src-sqlacc": path.resolve(__dirname, "src"),
               },
             },
           };

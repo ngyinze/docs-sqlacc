@@ -6,7 +6,7 @@ slug: /quick-start/gl/cash-book-entry
 formName: TfmGLCB 
 ---
 
-import {TOC} from '@src/components/toc.js';
+import {TOC} from '@src-sqlacc/components/toc.js';
 
 <TOC
 dataEntryList = {[

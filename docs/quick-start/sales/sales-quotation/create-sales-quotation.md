@@ -8,8 +8,8 @@ tags: ["Sales"]
 sidebar_class_name: hidden-sidebar-items
 ---
 
-import '@src/css/sidebar.css';
-import { YtLayout } from '@src/components/yt-layout';
+import '@src-sqlacc/css/sidebar.css';
+import { YtLayout } from '@src-sqlacc/components/yt-layout';
 
 <YtLayout 
 url="https://www.youtube.com/embed/lRYrv0OEwi4?autoplay=1"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaHome, FaFacebook, FaYoutube } from "react-icons/fa";
-import '@src/css/footer.css';
+import '@src-sqlacc/css/footer.css';
 import siteConfig from '@generated/docusaurus.config';
 
 const iconMap = {

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import 'videojs-youtube';
-import "@src/css/yt-player.css";
+import "@src-sqlacc/css/yt-player.css";
 
 export const VideoPlayer = ({ videoId, title }) => {
     const videoNode = useRef(null);

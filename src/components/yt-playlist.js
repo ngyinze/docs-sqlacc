@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from "@site/src/css/yt-playlist.module.css";
+import styles from "@src-sqlacc/css/yt-playlist.module.css";
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export default function YouTubePlaylist({ playlistId }) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import { ImYoutube } from "react-icons/im";
-import "@src/css/yt-player.css"
+import "@src-sqlacc/css/yt-player.css"
 
 export const QRCodeGenerator = ({url}) => {
     const [showQR, setShowQR] = useState(false);

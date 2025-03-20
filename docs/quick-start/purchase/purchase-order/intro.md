@@ -6,7 +6,7 @@ slug: /quick-start/purchase/purchase-order
 formName: TfmPHPO
 ---
 
-import {TOC} from '@src/components/toc.js';
+import {TOC} from '@src-sqlacc/components/toc.js';
 
 <TOC
 dataEntryList = {[

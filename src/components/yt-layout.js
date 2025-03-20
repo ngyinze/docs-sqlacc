@@ -1,6 +1,6 @@
 import React from "react";
-import { QRCodeGenerator } from "@src/components/qrcode.js";
-import { VideoPlayer } from "@src/components/yt-player.js";
+import { QRCodeGenerator } from "@src-sqlacc/components/qrcode.js";
+import { VideoPlayer } from "@src-sqlacc/components/yt-player.js";
 
 export const YtLayout = ({ url, videoId, title }) => {
 

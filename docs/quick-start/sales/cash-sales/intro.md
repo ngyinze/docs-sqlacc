@@ -6,7 +6,7 @@ slug: /quick-start/sales/cash-sales
 formName: TfmSLCS
 ---
 
-import {TOC} from '@src/components/toc.js';
+import {TOC} from '@src-sqlacc/components/toc.js';
 
 <TOC
 dataEntryList = {[
