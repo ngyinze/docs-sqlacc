@@ -1,7 +1,8 @@
 ---
 sidebar_position: 1
 title: Table of contents
-hide_title: true  
+hide_title: true
+hide_table_of_contents: true  
 slug: /quick-start/sales/sales-quotation
 formName: TfmSLQT
 --- 
