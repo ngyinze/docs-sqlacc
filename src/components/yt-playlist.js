@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from "@src-sqlacc/css/yt-playlist.module.css";
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
@@ -9,7 +9,12 @@ export default function YouTubePlaylist({ playlistId }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [nextPageToken, setNextPageToken] = useState(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+  
+  const videoListRef = useRef(null);
+  const loadingRef = useRef(null);
+  
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
@@ -28,6 +33,9 @@ export default function YouTubePlaylist({ playlistId }) {
         if (data.items && data.items.length > 0) {
           setSelectedVideo(data.items[0].snippet.resourceId.videoId);
         }
+
+        setNextPageToken(data.nextPageToken || null);
+        
       } catch (err) {
         setError(err.message);
       } finally {
@@ -42,6 +50,63 @@ export default function YouTubePlaylist({ playlistId }) {
       setLoading(false);
     }
   }, [playlistId, apiKey]);
+
+  const loadMoreVideos = () => {
+    if (nextPageToken && !loadingMore) {
+      setLoadingMore(true);
+      const fetchMoreVideos = async () => {
+        try {
+          const response = await fetch(
+            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}&pageToken=${nextPageToken}`
+          );
+          
+          if (!response.ok) {
+            throw new Error('Failed to fetch additional videos');
+          }
+          
+          const data = await response.json();
+          setPlaylistItems(prevItems => [...prevItems, ...(data.items || [])]);
+          setNextPageToken(data.nextPageToken || null);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoadingMore(false);
+        }
+      };
+      
+      fetchMoreVideos();
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!videoListRef.current || !loadingRef.current || loading || loadingMore || !nextPageToken) return;
+      
+      const videoListElement = videoListRef.current;
+      const loadingElement = loadingRef.current;
+      
+      // Check if the user has scrolled to the bottom (with a small threshold)
+      const threshold = 50; // pixels from bottom to trigger loading
+      const isAtBottom = 
+        videoListElement.scrollTop + videoListElement.clientHeight >= 
+        videoListElement.scrollHeight - threshold;
+        
+      if (isAtBottom) {
+        loadMoreVideos();
+      }
+    };
+    
+    const listElement = videoListRef.current;
+    if (listElement) {
+      listElement.addEventListener('scroll', handleScroll);
+    }
+    
+    return () => {
+      if (listElement) {
+        listElement.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [loading, loadingMore, nextPageToken]);
 
   const selectVideo = (videoId) => {
     setSelectedVideo(videoId);
@@ -63,10 +128,10 @@ export default function YouTubePlaylist({ playlistId }) {
     const firstThumbnail = Object.values(thumbnails).find(thumb => thumb?.url);
     if (firstThumbnail?.url) return firstThumbnail.url;
     
-    return 'https://placehold.co/600x400';
+    return 'https://placehold.co/120x68?text=Unavailable';
   };
 
-  if (loading) return <div className={styles.loading}>Loading playlist...</div>;
+  if (loading && playlistItems.length === 0) return <div className={styles.loading}>Loading playlist...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
 
   return (
@@ -85,7 +150,7 @@ export default function YouTubePlaylist({ playlistId }) {
       
       <div className={styles.playlistItems}>
         <h3>Playlist Videos</h3>
-        <ul className={styles.videoList}>
+        <ul className={styles.videoList} ref={videoListRef}>
           {playlistItems.map((item) => (
             <li 
               key={item.id}
@@ -99,7 +164,7 @@ export default function YouTubePlaylist({ playlistId }) {
                   className={styles.thumbnail}
                   onError={(e) => {
                     e.target.onerror = null; 
-                    e.target.src = 'https://via.placeholder.com/120x68?text=Error';
+                    e.target.src = 'https://placehold.co/120x68?text=Unavailable';
                   }}
                 />
               </div>
@@ -108,10 +173,18 @@ export default function YouTubePlaylist({ playlistId }) {
               </div>
             </li>
           ))}
+          
+          {nextPageToken && (
+            <li ref={loadingRef} className={styles.loadingMoreItem}>
+              {loadingMore ? (
+                <div className={styles.spinner}></div>
+              ) : (
+                <div className={styles.scrollIndicator}>Scroll for more videos</div>
+              )}
+            </li>
+          )}
         </ul>
       </div>
     </div>
   );
-
-  
 }
